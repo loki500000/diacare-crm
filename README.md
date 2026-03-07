@@ -17,7 +17,7 @@ DiaCare CRM helps clinics manage diabetic patients, schedule and track follow-up
 - **Analytics Dashboard** — Patient severity breakdown, call volume trends, compliance averages, pickup rates
 - **Triage View** — Prioritised patient list by severity and risk
 - **Call Script Builder** — Visual flow editor for call scripts
-- **Settings** — Clinic profile, Asterisk ARI credentials, admin accounts
+- **Settings** — Clinic profile, Asterisk ARI credentials, admin account
 
 ---
 
