@@ -1,0 +1,14 @@
+# Secrets
+.env
+.env.local
+.env.production
+AVA-AI-Voice-Agent-for-Asterisk/.env
+
+# Python
+crm-backend/venv/
+**/__pycache__/
+*.pyc
+
+# Next.js
+frontend/.next/
+frontend/node_modules/

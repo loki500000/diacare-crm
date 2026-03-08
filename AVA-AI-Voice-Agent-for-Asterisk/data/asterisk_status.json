@@ -1,0 +1,20 @@
+{
+    "timestamp": "2026-03-08T11:23:34Z",
+    "asterisk_found": true,
+    "asterisk_version": "Asterisk 22.8.2",
+    "config_dir": "/etc/asterisk",
+    "freepbx": {
+        "detected": false,
+        "version": ""
+    },
+    "checks": {
+    "ari_enabled": { "ok": true, "detail": "enabled=yes in ari.conf" },
+    "ari_user": { "ok": true, "detail": "[asterisk] found in ari.conf" },
+    "http_enabled": { "ok": true, "detail": "enabled=yes in http.conf" },
+    "dialplan_context": { "ok": true, "detail": "Stasis(asterisk-ai-voice-agent) in extensions_custom.conf" },
+    "module_app_audiosocket": { "ok": true, "detail": "Running" },
+    "module_res_ari": { "ok": true, "detail": "Running" },
+    "module_res_stasis": { "ok": true, "detail": "Running" },
+    "module_chan_pjsip": { "ok": true, "detail": "Running" }
+}
+}

@@ -1267,6 +1267,68 @@ pipelines:
         format:
           encoding: mulaw
           sample_rate: 8000
+  medical-receptionist:
+    greeting: >-
+      Hello {caller_name}, this is Ava calling from DiaCare clinic. I am your
+      AI health assistant. How are you feeling today?
+    profile: telephony_ulaw_8k
+    provider: openai
+    prompt: >
+      You are Ava, an AI health assistant calling on behalf of DiaCare clinic
+      to follow up with a diabetes patient.
+
+
+      YOUR ROLE:
+
+      - Conduct a friendly, empathetic follow-up call with the patient
+
+      - Ask about their current health: blood sugar readings, medications, diet, and lifestyle
+
+      - Check medication compliance (are they taking their medications as prescribed?)
+
+      - Ask about any symptoms or concerns they want to report to the doctor
+
+      - Summarize key findings at the end of the call
+
+
+      CONVERSATION STYLE:
+
+      - Be warm, caring, and patient
+
+      - Speak clearly and simply — avoid medical jargon
+
+      - Keep each response short (1–2 sentences), then ask one question at a time
+
+      - If the patient sounds distressed or reports a medical emergency, advise them to call emergency services immediately
+
+
+      KEY QUESTIONS TO COVER (one at a time, naturally):
+
+      - How have you been feeling since your last visit?
+
+      - Have you been taking your medications regularly?
+
+      - What were your recent blood sugar readings?
+
+      - How has your diet been? Any changes?
+
+      - Have you been doing any physical activity?
+
+      - Any new symptoms or concerns you would like the doctor to know about?
+
+
+      ENDING THE CALL:
+
+      - Summarize what was discussed and any concerns noted
+
+      - Remind them of their next appointment if mentioned
+
+      - When done, say a warm goodbye and use hangup_call to end the call
+    tools:
+      - hangup_call
+    post_call_tools:
+      - diacare_crm_webhook
+
 profiles:
   default: telephony_ulaw_8k
   openai_realtime_24k:
@@ -1698,6 +1760,29 @@ tools:
       ghl_contact_name: "contacts[0].name"
       ghl_contact_email: "contacts[0].email"
   
+  diacare_crm_webhook:
+    kind: generic_webhook
+    phase: post_call
+    enabled: true
+    is_global: false
+    timeout_ms: 5000
+    url: "http://172.17.0.1:8001/api/calls/webhook"
+    method: POST
+    headers:
+      Content-Type: "application/json"
+    payload_template: |
+      {
+        "caller_id": "{caller_number}",
+        "duration_secs": {call_duration},
+        "outcome": "{call_outcome}",
+        "transcript": {transcript_json},
+        "summary": "{summary}",
+        "sentiment": "unknown",
+        "ended_at": "{call_end_time}",
+        "tool_calls": []
+      }
+    generate_summary: true
+
   # Example: Post-call webhook (global - fires for all calls)
   # Sends call data to external system after call ends
   demo_post_call_webhook:
